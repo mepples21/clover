@@ -6,7 +6,7 @@
 
 2. Validate that the OUs ONLY contain users who are being migrated.
 
-3. Create a new email address policy (or policies if multiple OUs are in play) that applies to the OU with the relevant mailboxes. This email address policy should set the primary SMTP address for the relevant users to clovertech.com. There should be no secondary addresses, or at least no secondary addresses from the domains that are being removed.
+3. Create a new email address policy (or policies if multiple OUs are in play) that applies to the OU(s) with the relevant mailboxes. This email address policy should set the primary SMTP address for the relevant users to clovertech.com. There should be no secondary addresses, or at least no secondary addresses from the domains that are being removed.
 
 4. Run the following command against each OU:
 
@@ -14,9 +14,9 @@
 
 5. Run the following scripts:
 
-`.\Remove-americancommunications.com.ps1`
-`.\Remove-depotenterprise.com.ps1`
-`.\Remove-go-ac.com`
+- `.\Remove-americancommunications.com.ps1`
+- `.\Remove-depotenterprise.com.ps1`
+- `.\Remove-go-ac.com`
 
 6. Perform a delta synchronization on Azure AD Connect.
 
