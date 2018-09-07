@@ -48,27 +48,22 @@ if ($ExchangePowerShell -eq $null) {
 #Remove email addresses from domains that are not supported
 
     #Put domains to remove in an array
-    $domainstoremove = @()
-    $domainstoremove = "depotenterprise.com"
 
     #Gather data
     $remotemailboxes = @()
     $remotemailboxes = Get-RemoteMailbox -ResultSize Unlimited
 
     #Remove email addresses for each domain
-
-        $remotemailboxes | ForEach-Object {
-            for ($i=0;$i -lt $_.EmailAddresses.Count; $i++)
-            {
-                $address = $_.EmailAddresses[$i]
-                if ($address.IsPrimaryAddress -eq $false -and $address.SmtpAddress -like $domain )
-                {
-                    Write-host($address.AddressString.ToString() | out-file c:\addressesRemoved.txt -append )
-                    $_.EmailAddresses.RemoveAt($i)
-                    $i--
-                }
-            }
-            Set-RemoteMailbox -Identity $_.Identity -EmailAddresses $_.EmailAddresses
-        }
+    foreach ($object in $remotemailboxes) {
+        for ($i=0; $i -lt $emailaddresses.count; $i++) {
+        
+            # Change the domain name below to what you want to remove
+            if ($emailaddresses[$i].smtpaddress -like "*depotenterprise.com*") {
+     
+                # Remove the unwanted email address
+                $badaddress = $emailaddresses[$i];
+                $emailaddresses = $emailaddresses - $badaddress;
+                $object | set-remotemailbox -emailaddresses $emailaddresses;
+    }
 
 Stop-Transcript
